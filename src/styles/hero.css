@@ -1,0 +1,643 @@
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 150px 0 80px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+}
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+
+  width: min(1200px, 92%);
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 70px;
+
+  align-items: center;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-glow {
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+  opacity: 0.12;
+}
+
+.hero-glow-one {
+  top: 5%;
+  left: -10%;
+  background: #0ea5e9;
+}
+
+.hero-glow-two {
+  right: -10%;
+  bottom: -10%;
+  background: #6366f1;
+}
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.hero-badge {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 8px 13px;
+  margin-bottom: 28px;
+
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 50px;
+
+  background: rgba(56, 189, 248, 0.06);
+
+  color: #7dd3fc;
+
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 12px rgba(34, 197, 94, 0.8);
+}
+
+/* =========================================================
+   HERO TEXT
+========================================================= */
+
+.hero-intro {
+  margin-bottom: 5px;
+
+  color: var(--text-secondary);
+
+  font-size: 1rem;
+}
+
+.hero h1 {
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: clamp(
+    3.5rem,
+    7vw,
+    6.3rem
+  );
+
+  line-height: 0.95;
+
+  letter-spacing: -5px;
+
+  font-weight: 700;
+
+  color: var(--text-primary);
+}
+
+.hero h1 span {
+  color: var(--accent);
+}
+
+.hero h2 {
+  margin-top: 22px;
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: clamp(
+    1.5rem,
+    3vw,
+    2.3rem
+  );
+
+  line-height: 1.2;
+
+  color: var(--text-primary);
+}
+
+.hero h2 span {
+  color: var(--text-secondary);
+}
+
+.hero-description {
+  max-width: 600px;
+
+  margin-top: 25px;
+
+  color: var(--text-secondary);
+
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  margin-top: 34px;
+}
+
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 14px 20px;
+
+  border-radius: 12px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  transition: 0.3s ease;
+}
+
+.primary-button {
+  background: var(--accent);
+  color: #03111b;
+}
+
+.primary-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 35px rgba(56, 189, 248, 0.25);
+}
+
+.secondary-button {
+  border: 1px solid var(--border-color);
+
+  color: var(--text-primary);
+
+  background: transparent;
+}
+
+.secondary-button:hover {
+  border-color: var(--accent);
+
+  color: var(--accent);
+
+  transform: translateY(-3px);
+}
+
+/* =========================================================
+   MINI SKILLS
+========================================================= */
+
+.hero-skills {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 25px;
+
+  margin-top: 48px;
+}
+
+.hero-skill {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.hero-skill svg {
+  color: var(--accent);
+}
+
+.hero-skill div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.hero-skill strong {
+  color: var(--text-primary);
+
+  font-size: 0.82rem;
+}
+
+.hero-skill span {
+  color: var(--text-muted);
+
+  font-size: 0.7rem;
+}
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.hero-visual {
+  position: relative;
+
+  min-height: 500px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visual-card {
+  width: min(470px, 100%);
+
+  min-height: 330px;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 24px;
+
+  background: rgba(15, 23, 42, 0.7);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  transform:
+    perspective(1000px)
+    rotateY(-5deg);
+
+  transition: 0.5s ease;
+}
+
+.visual-card:hover {
+  transform:
+    perspective(1000px)
+    rotateY(0deg)
+    translateY(-5px);
+}
+
+.visual-card-top {
+  height: 50px;
+
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.06);
+}
+
+.circle {
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #475569;
+}
+
+.code-display {
+  padding: 45px 35px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+
+  font-family:
+    "Space Grotesk",
+    monospace;
+
+  font-size: 1rem;
+
+  color: #94a3b8;
+}
+
+.code-line {
+  display: block;
+}
+
+.code-line i {
+  color: #c084fc;
+
+  font-style: normal;
+}
+
+.code-line b {
+  color: var(--accent);
+
+  font-weight: 500;
+}
+
+.indent {
+  padding-left: 30px;
+}
+
+/* =========================================================
+   FLOATING CARDS
+========================================================= */
+
+.floating-card {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 13px 17px;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 14px;
+
+  background: rgba(15, 23, 42, 0.8);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  color: var(--text-primary);
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.25);
+
+  animation:
+    floating 4s ease-in-out infinite;
+}
+
+.floating-card svg {
+  color: var(--accent);
+}
+
+.floating-card-one {
+  top: 25%;
+  right: -15px;
+}
+
+.floating-card-two {
+  bottom: 22%;
+  left: -15px;
+
+  animation-delay: -2s;
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
+.scroll-indicator {
+  position: absolute;
+
+  bottom: 25px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: var(--text-muted);
+
+  font-size: 0.7rem;
+}
+
+.scroll-indicator span {
+  width: 18px;
+  height: 28px;
+
+  border: 1px solid var(--text-muted);
+
+  border-radius: 20px;
+
+  position: relative;
+}
+
+.scroll-indicator span::after {
+  content: "";
+
+  position: absolute;
+
+  width: 3px;
+  height: 6px;
+
+  top: 5px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border-radius: 5px;
+
+  background: var(--accent);
+
+  animation: scroll 1.8s infinite;
+}
+
+@keyframes scroll {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, 0);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, 10px);
+  }
+}
+
+/* =========================================================
+   LIGHT MODE
+========================================================= */
+
+body.light-mode .visual-card,
+body.light-mode .floating-card {
+  background: rgba(255, 255, 255, 0.82);
+
+  border-color:
+    rgba(15, 23, 42, 0.08);
+
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
+body.light-mode .code-display {
+  color: var(--text-secondary);
+}
+
+body.light-mode .hero-badge {
+  color: #0284c7;
+
+  background:
+    rgba(14, 165, 233, 0.07);
+}
+
+body.light-mode .hero-glow {
+  opacity: 0.08;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .hero-container {
+    grid-template-columns: 1fr;
+
+    gap: 60px;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons,
+  .hero-skills {
+    justify-content: center;
+  }
+
+  .hero-visual {
+    min-height: 430px;
+  }
+
+  .floating-card-one {
+    right: 0;
+  }
+
+  .floating-card-two {
+    left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .hero {
+    padding-top: 120px;
+    padding-bottom: 70px;
+  }
+
+  .hero h1 {
+    font-size: 3.3rem;
+
+    letter-spacing: -3px;
+  }
+
+  .hero h2 {
+    font-size: 1.45rem;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+
+  .hero-skills {
+    gap: 18px;
+  }
+
+  .hero-visual {
+    min-height: 350px;
+  }
+
+  .visual-card {
+    min-height: 270px;
+  }
+
+  .code-display {
+    padding: 30px 20px;
+
+    font-size: 0.75rem;
+  }
+
+  .indent {
+    padding-left: 15px;
+  }
+
+  .floating-card {
+    padding: 10px 13px;
+
+    font-size: 0.7rem;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}

@@ -1,0 +1,417 @@
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 78px;
+
+  z-index: 1000;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+
+.dark-mode .navbar {
+  background: rgba(7, 11, 20, 0.72);
+}
+
+
+.light-mode .navbar {
+  background: rgba(246, 248, 252, 0.78);
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.navbar-container {
+  width: min(var(--container-width), var(--container-space));
+
+  height: 100%;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+/* =========================================================
+   PROFESSIONAL LOGO
+========================================================= */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+
+  flex-shrink: 0;
+
+  color: var(--text-primary);
+
+  transition:
+    transform var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.logo:hover {
+  transform: translateY(-1px);
+}
+
+/* Monogramme FL */
+
+.logo-mark {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      var(--accent-dark)
+    );
+
+  color: #ffffff;
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+
+  letter-spacing: -3px;
+
+  box-shadow:
+    0 8px 25px rgba(56, 189, 248, 0.20);
+
+  overflow: hidden;
+}
+
+.logo-mark::before {
+  content: "";
+
+  position: absolute;
+
+  width: 18px;
+  height: 18px;
+
+  top: -8px;
+  right: -8px;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+
+  border-radius: 50%;
+}
+
+.logo-mark span:first-child {
+  transform: translateX(2px);
+}
+
+.logo-mark span:last-child {
+  transform: translateX(-1px);
+}
+
+/* Texte du logo */
+
+.logo-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.logo-name {
+  font-family: "Space Grotesk", sans-serif;
+
+  color: var(--text-primary);
+
+  font-size: 0.9rem;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  letter-spacing: 0.8px;
+}
+
+.logo-name strong {
+  font-weight: 800;
+}
+
+.logo-specialties {
+  color: var(--accent);
+
+  font-size: 0.55rem;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 1.8px;
+}
+
+/* Effet au survol */
+
+.logo:hover .logo-mark {
+  box-shadow:
+    0 10px 30px rgba(56, 189, 248, 0.35);
+
+  transform: rotate(-3deg);
+}
+
+.logo-mark,
+.logo-name,
+.logo-specialties {
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+
+  gap: 34px;
+}
+
+
+.nav-links a {
+  position: relative;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: var(--text-primary);
+
+  opacity: 0.72;
+
+  transition: var(--transition-fast);
+}
+
+
+.nav-links a:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+
+
+.nav-links a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -8px;
+
+  width: 0;
+  height: 2px;
+
+  background: var(--accent);
+
+  transition: var(--transition-fast);
+}
+
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+.theme-button,
+.menu-button {
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+
+  background: var(--card-bg);
+
+  color: var(--text-primary);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: var(--transition-fast);
+}
+
+
+.theme-button:hover,
+.menu-button:hover {
+  color: var(--accent);
+
+  border-color: rgba(56, 189, 248, 0.4);
+
+  transform: translateY(-2px);
+}
+
+
+.nav-contact {
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  background: var(--accent);
+
+  color: #03111b;
+
+  font-size: 0.88rem;
+  font-weight: 700;
+
+  transition: var(--transition-fast);
+}
+
+
+.nav-contact:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px rgba(56, 189, 248, 0.25);
+}
+
+
+.menu-button {
+  display: none;
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+.mobile-menu {
+  display: none;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .nav-links,
+  .nav-contact {
+    display: none;
+  }
+
+  .menu-button {
+    display: flex;
+  }
+
+  .mobile-menu {
+    position: absolute;
+
+    top: 78px;
+    left: 4%;
+
+    width: 92%;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+
+    backdrop-filter: blur(20px);
+  }
+
+  .dark-mode .mobile-menu {
+    background: rgba(7, 11, 20, 0.95);
+  }
+
+  .light-mode .mobile-menu {
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .mobile-menu a {
+    padding: 13px;
+
+    border-radius: 10px;
+
+    color: var(--text-primary);
+  }
+
+  .mobile-menu a:hover {
+    background: rgba(56, 189, 248, 0.08);
+
+    color: var(--accent);
+  }
+
+  .mobile-contact {
+    margin-top: 8px;
+
+    background: var(--accent);
+
+    color: #03111b !important;
+
+    text-align: center;
+
+    font-weight: 700;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .navbar {
+    height: 70px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .theme-button,
+  .menu-button {
+    width: 38px;
+    height: 38px;
+  }
+
+}
