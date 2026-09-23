@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import {
+  ArrowLeft,
+  ArrowRight,
   ArrowUpRight,
   Code2,
   Database,
+  ExternalLink,
   Server,
   X,
 } from "lucide-react";
@@ -11,12 +15,28 @@ import "../styles/projects.css";
 
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  /* =========================================================
+     PROJETS
+  ========================================================= */
 
   const projects = [
     {
       id: 1,
+
       category: "APPLICATION WEB",
+
       title: "Gestion des Stages",
+
+      images: [
+        "/images/projects/gestion-stages-1.jpg",
+        "/images/projects/gestion-stages-2.jpg",
+        "/images/projects/gestion-stages-3.jpg",
+      ],
+
+      // Remplacez cette adresse par le lien réel de votre application
+    link: "https://gestion-stage-frontend-ycmo.onrender.com",
 
       shortDescription:
         "Plateforme web de gestion et de suivi des stages basée sur une gestion des accès adaptée aux différents rôles des utilisateurs.",
@@ -43,25 +63,150 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
     },
   ];
 
+  /* =========================================================
+     DÉFILEMENT AUTOMATIQUE
+  ========================================================= */
+
+  useEffect(() => {
+    const totalSlides = projects[0]?.images?.length || 0;
+
+    if (totalSlides <= 1) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setCurrentSlide((previous) => {
+        return (previous + 1) % totalSlides;
+      });
+    }, 4000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [projects]);
+
+  /* =========================================================
+     RESET DU SLIDER LORSQU'ON OUVRE LE MODAL
+  ========================================================= */
+
+  useEffect(() => {
+    if (selectedProject) {
+      setCurrentSlide(0);
+    }
+  }, [selectedProject]);
+
+  /* =========================================================
+     BLOQUER LE SCROLL QUAND LE MODAL EST OUVERT
+  ========================================================= */
+
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject]);
+
+  /* =========================================================
+     FERMER LE MODAL AVEC ÉCHAP
+  ========================================================= */
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setSelectedProject(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
+  /* =========================================================
+     OUVRIR LE PROJET
+  ========================================================= */
+
   const openProject = (project) => {
     setSelectedProject(project);
-    document.body.style.overflow = "hidden";
+    setCurrentSlide(0);
   };
+
+  /* =========================================================
+     FERMER LE PROJET
+  ========================================================= */
 
   const closeProject = () => {
     setSelectedProject(null);
-    document.body.style.overflow = "";
   };
+
+  /* =========================================================
+     SLIDE SUIVANTE
+  ========================================================= */
+
+  const nextSlide = () => {
+    const images = selectedProject?.images;
+
+    if (!images?.length) {
+      return;
+    }
+
+    setCurrentSlide(
+      (previous) => (previous + 1) % images.length
+    );
+  };
+
+  /* =========================================================
+     SLIDE PRÉCÉDENTE
+  ========================================================= */
+
+  const previousSlide = () => {
+    const images = selectedProject?.images;
+
+    if (!images?.length) {
+      return;
+    }
+
+    setCurrentSlide(
+      (previous) =>
+        (previous - 1 + images.length) % images.length
+    );
+  };
+
+  /* =========================================================
+     ALLER À UNE IMAGE PRÉCISE
+  ========================================================= */
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  /* =========================================================
+     RENDU
+  ========================================================= */
 
   return (
     <>
+      {/* =====================================================
+          SECTION PROJETS
+      ====================================================== */}
+
       <section
         id="projects"
         className="section projects-section"
       >
         <div className="section-container">
 
-          {/* EN-TÊTE */}
+          {/* =================================================
+              EN-TÊTE
+          ================================================== */}
+
           <div className="section-heading">
             <span className="section-label">
               <Code2 size={16} />
@@ -74,14 +219,17 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
             </h2>
 
             <p>
-              Découvrez une sélection de projets réalisés autour du
-              développement web, de la gestion des données et de la
-              création d’applications modernes adaptées aux besoins
-              des utilisateurs.
+              Découvrez une sélection de projets réalisés autour
+              du développement web, de la gestion des données et
+              de la création d’applications modernes adaptées
+              aux besoins des utilisateurs.
             </p>
           </div>
 
-          {/* PROJETS */}
+          {/* =================================================
+              GRILLE
+          ================================================== */}
+
           <div className="projects-grid">
 
             {projects.map((project) => (
@@ -90,123 +238,139 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
                 key={project.id}
               >
 
-                {/* VISUEL */}
+                {/* =================================================
+                    VISUEL
+                ================================================== */}
+
                 <div className="project-visual">
+
+                  {/* Halo */}
 
                   <div className="project-glow"></div>
 
-                  <div className="code-window">
+                  {/* =================================================
+                      CADRE NAVIGATEUR
+                  ================================================== */}
 
-                    <div className="code-window-header">
-                      <span></span>
-                      <span></span>
-                      <span></span>
+                  <div className="project-browser">
+
+                    {/* Barre navigateur */}
+
+                    <div className="browser-header">
+
+                      <div className="browser-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+
+                      <div className="browser-address">
+                        <span className="browser-lock">
+                          🔒
+                        </span>
+
+                        <span>
+                          gestion-stages
+                        </span>
+                      </div>
+
+                      <div className="browser-actions">
+                        <span></span>
+                        <span></span>
+                      </div>
+
                     </div>
 
-                    <div className="code-content">
-                      <div className="code-line">
-                        <span className="code-number">
-                          01
-                        </span>
+                    {/* =================================================
+                        SLIDER
+                    ================================================== */}
 
-                        <span className="code-purple">
-                          const
-                        </span>
+                    <div className="project-slider">
 
-                        <span className="code-white">
-                          {" "}
-                          project
-                        </span>
+                      <div
+                        className="project-slider-track"
+                        style={{
+                          transform: `translateX(-${
+                            currentSlide * 100
+                          }%)`,
+                        }}
+                      >
 
-                        <span className="code-blue">
-                          =
-                        </span>
+                        {project.images.map(
+                          (image, index) => (
+                            <div
+                              className="project-slide"
+                              key={image}
+                            >
+                              <img
+                                src={image}
+                                alt={`${project.title} - capture ${
+                                  index + 1
+                                }`}
+                              />
+                            </div>
+                          )
+                        )}
+
                       </div>
 
-                      <div className="code-line">
-                        <span className="code-number">
-                          02
-                        </span>
+                      {/* Flèche précédente */}
 
-                        <span className="code-green">
-                          {"{"}
-                        </span>
+                      <button
+                        type="button"
+                        className="slider-arrow slider-arrow-left"
+                        onClick={previousSlide}
+                        aria-label="Capture précédente"
+                      >
+                        <ArrowLeft size={17} />
+                      </button>
+
+                      {/* Flèche suivante */}
+
+                      <button
+                        type="button"
+                        className="slider-arrow slider-arrow-right"
+                        onClick={nextSlide}
+                        aria-label="Capture suivante"
+                      >
+                        <ArrowRight size={17} />
+                      </button>
+
+                      {/* Indicateurs */}
+
+                      <div className="slider-indicators">
+
+                        {project.images.map(
+                          (_, index) => (
+                            <button
+                              key={index}
+                              type="button"
+                              className={
+                                currentSlide === index
+                                  ? "slider-dot active"
+                                  : "slider-dot"
+                              }
+                              onClick={() =>
+                                goToSlide(index)
+                              }
+                              aria-label={`Afficher la capture ${
+                                index + 1
+                              }`}
+                            />
+                          )
+                        )}
+
                       </div>
 
-                      <div className="code-line">
-                        <span className="code-number">
-                          03
-                        </span>
-
-                        <span className="code-white">
-                          {"  "}
-                          frontend:
-                        </span>
-
-                        <span className="code-yellow">
-                          "React.js"
-                        </span>
-                      </div>
-
-                      <div className="code-line">
-                        <span className="code-number">
-                          04
-                        </span>
-
-                        <span className="code-white">
-                          {"  "}
-                          backend:
-                        </span>
-
-                        <span className="code-yellow">
-                          "Django"
-                        </span>
-                      </div>
-
-                      <div className="code-line">
-                        <span className="code-number">
-                          05
-                        </span>
-
-                        <span className="code-white">
-                          {"  "}
-                          database:
-                        </span>
-
-                        <span className="code-yellow">
-                          "PostgreSQL"
-                        </span>
-                      </div>
-
-                      <div className="code-line">
-                        <span className="code-number">
-                          06
-                        </span>
-
-                        <span className="code-green">
-                          {"}"}
-                        </span>
-                      </div>
-
-                      <div className="code-line">
-                        <span className="code-number">
-                          07
-                        </span>
-
-                        <span className="code-purple">
-                          export
-                        </span>
-
-                        <span className="code-white">
-                          {" "}
-                          default project;
-                        </span>
-                      </div>
                     </div>
                   </div>
 
-                  {/* CARTE FLOTTANTE */}
+                  {/* =================================================
+                      CARTE FLOTTANTE
+                  ================================================== */}
+
                   <div className="project-floating-card">
+
                     <div className="floating-icon">
                       <Server size={18} />
                     </div>
@@ -220,11 +384,15 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
                         Gestion & Administration
                       </span>
                     </div>
+
                   </div>
 
                 </div>
 
-                {/* CONTENU */}
+                {/* =================================================
+                    CONTENU
+                ================================================== */}
+
                 <div className="project-content">
 
                   <span className="project-category">
@@ -239,7 +407,8 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
                     {project.shortDescription}
                   </p>
 
-                  {/* TECHNOLOGIES */}
+                  {/* Technologies */}
+
                   <div className="project-technologies">
 
                     {project.technologies.map(
@@ -255,25 +424,51 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
 
                   </div>
 
-                  {/* ACTION */}
-                  <button
-                    type="button"
-                    className="project-details-button"
-                    onClick={() =>
-                      openProject(project)
-                    }
-                  >
-                    <span>
-                      Voir les détails
-                    </span>
+                  {/* Actions */}
 
-                    <ArrowUpRight
-                      size={18}
-                      strokeWidth={1.8}
-                    />
-                  </button>
+                  <div className="project-actions">
+
+                    <button
+                      type="button"
+                      className="project-details-button"
+                      onClick={() =>
+                        openProject(project)
+                      }
+                    >
+                      <span>
+                        Voir les détails
+                      </span>
+
+                      <ArrowUpRight
+                        size={18}
+                        strokeWidth={1.8}
+                      />
+                    </button>
+
+                    {project.link &&
+                      project.link !==
+                        "https://votre-lien-du-projet.com" && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-live-button"
+                        >
+                          <span>
+                            Voir le projet
+                          </span>
+
+                          <ExternalLink
+                            size={17}
+                            strokeWidth={1.8}
+                          />
+                        </a>
+                    )}
+
+                  </div>
 
                 </div>
+
               </article>
             ))}
 
@@ -281,12 +476,16 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
         </div>
       </section>
 
-      {/* MODAL */}
+      {/* =====================================================
+          MODAL
+      ====================================================== */}
+
       {selectedProject && (
         <div
           className="project-modal-overlay"
           onClick={closeProject}
         >
+
           <div
             className="project-modal"
             onClick={(event) =>
@@ -294,7 +493,10 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
             }
           >
 
-            {/* HEADER MODAL */}
+            {/* =================================================
+                HEADER MODAL
+            ================================================== */}
+
             <div className="project-modal-header">
 
               <div>
@@ -318,10 +520,97 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
 
             </div>
 
-            {/* INFOS TECHNIQUES */}
+            {/* =================================================
+                SLIDER MODAL
+            ================================================== */}
+
+            <div className="modal-project-slider">
+
+              <div
+                className="modal-slider-track"
+                style={{
+                  transform: `translateX(-${
+                    currentSlide * 100
+                  }%)`,
+                }}
+              >
+
+                {selectedProject.images.map(
+                  (image, index) => (
+                    <div
+                      className="modal-slide"
+                      key={image}
+                    >
+                      <img
+                        src={image}
+                        alt={`${selectedProject.title} - capture ${
+                          index + 1
+                        }`}
+                      />
+                    </div>
+                  )
+                )}
+
+              </div>
+
+              {/* Flèche précédente */}
+
+              <button
+                type="button"
+                className="modal-slider-arrow modal-slider-left"
+                onClick={previousSlide}
+                aria-label="Image précédente"
+              >
+                <ArrowLeft size={19} />
+              </button>
+
+              {/* Flèche suivante */}
+
+              <button
+                type="button"
+                className="modal-slider-arrow modal-slider-right"
+                onClick={nextSlide}
+                aria-label="Image suivante"
+              >
+                <ArrowRight size={19} />
+              </button>
+
+              {/* Indicateurs */}
+
+              <div className="modal-slider-indicators">
+
+                {selectedProject.images.map(
+                  (_, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      className={
+                        currentSlide === index
+                          ? "modal-slider-dot active"
+                          : "modal-slider-dot"
+                      }
+                      onClick={() =>
+                        goToSlide(index)
+                      }
+                      aria-label={`Afficher la capture ${
+                        index + 1
+                      }`}
+                    />
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+            {/* =================================================
+                INFOS TECHNIQUES
+            ================================================== */}
+
             <div className="project-modal-tech">
 
               <div className="modal-tech-item">
+
                 <Code2 size={19} />
 
                 <div>
@@ -333,9 +622,11 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
                     React.js
                   </strong>
                 </div>
+
               </div>
 
               <div className="modal-tech-item">
+
                 <Server size={19} />
 
                 <div>
@@ -347,9 +638,11 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
                     Django
                   </strong>
                 </div>
+
               </div>
 
               <div className="modal-tech-item">
+
                 <Database size={19} />
 
                 <div>
@@ -361,25 +654,34 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
                     PostgreSQL
                   </strong>
                 </div>
+
               </div>
 
             </div>
 
-            {/* DESCRIPTION */}
+            {/* =================================================
+                DESCRIPTION
+            ================================================== */}
+
             <div className="project-modal-description">
 
               {selectedProject.description
                 .trim()
                 .split("\n\n")
-                .map((paragraph, index) => (
-                  <p key={index}>
-                    {paragraph.trim()}
-                  </p>
-                ))}
+                .map(
+                  (paragraph, index) => (
+                    <p key={index}>
+                      {paragraph.trim()}
+                    </p>
+                  )
+                )}
 
             </div>
 
-            {/* TECHNOLOGIES */}
+            {/* =================================================
+                TECHNOLOGIES
+            ================================================== */}
+
             <div className="project-modal-tags">
 
               {selectedProject.technologies.map(
@@ -394,6 +696,30 @@ Ainsi, chaque utilisateur dispose d’un espace et de permissions adaptés à so
               )}
 
             </div>
+
+            {/* =================================================
+                LIEN PROJET
+            ================================================== */}
+
+            {selectedProject.link &&
+              selectedProject.link !==
+                "https://votre-lien-du-projet.com" && (
+                <a
+                  href={selectedProject.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="modal-project-link"
+                >
+                  <span>
+                    Accéder au projet
+                  </span>
+
+                  <ExternalLink
+                    size={18}
+                    strokeWidth={1.8}
+                  />
+                </a>
+            )}
 
           </div>
         </div>
